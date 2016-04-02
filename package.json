@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "a"
+    "url": "https://github.com/vermicida/node-sparrest.git"
   },
   "keywords": [
     "web",
