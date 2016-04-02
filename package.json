@@ -1,0 +1,28 @@
+{
+  "name": "node-sparrest",
+  "version": "0.0.1",
+  "description": "Based on Alberto Casero's SparREST, node-sparrest brings to you a local sparring backend to test your APIs with.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "a"
+  },
+  "keywords": [
+    "web",
+    "server",
+    "webserver",
+    "rest",
+    "restful",
+    "api",
+    "json",
+    "sparrest"
+  ],
+  "author": "Diego Herrera",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "lodash": "^4.7.0",
+    "minimist": "^1.2.0"
+  }
+}
