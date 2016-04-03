@@ -16,7 +16,7 @@ $ npm install node-sparrest --save-dev
 And add this script within your project's `package.json` file:
 ```
   "scripts": {
-    "sparrest": "node ./node-modules/node-sparrest/node-sparrest.js"
+    "sparrest": "node ./node_modules/node-sparrest/node-sparrest.js"
   }
 ```
 
