@@ -29,7 +29,7 @@ $ npm run sparrest
 
 The default configuration runs the **node-sparrest** server at `http://127.0.0.1:8000`, but you can customize it.
 
-**node-sparrest** allows you to override the default configuratio via a local `ns-config.json` or `ns-config.js` file in your project.
+**node-sparrest** allows you to override the default configuration via a local `ns-config.json` or `ns-config.js` file in your project.
 
 You can provide custom path to your config file via `-c` or `--config=` runtime options:
 ```bash
@@ -57,7 +57,7 @@ Also, you can change the directory where the entities are stored, being `./api` 
 
 ## More
 
-**node-sparrest** is based on Alberto Casero's SparREST; this is only an attempt to port from Python to the Node.js world. I highly recommend you to visit the [SparREST repository](https://github.com/kasappeal/sparrest) for more info.
+**node-sparrest** is based on Alberto Casero's SparREST; this is only an attempt to port it from Python to the Node.js world. I highly recommend you to visit the [SparREST repository](https://github.com/kasappeal/sparrest) for more info.
 
 ## Status
 
