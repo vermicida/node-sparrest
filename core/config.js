@@ -10,9 +10,11 @@ var argv = require("minimist")(process.argv.slice(2));
 
 // The module default config.
 var defaultConfig = {
+    "dirs": {
+        "api": "./api",
+        "static": "./api/static"
+    },
     "server": {
-        "apiDir": "./api",
-        "apiFileExtension": ".json",
         "host": "127.0.0.1",
         "port": 8000
     }
@@ -42,4 +44,4 @@ catch(err) {
 // Overrides the module default config with the user's one.
 _.merge(defaultConfig, userConfig);
 
-exports.config = defaultConfig;
+module.exports = defaultConfig;

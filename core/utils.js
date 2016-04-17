@@ -1,4 +1,5 @@
 
+var _ = require("lodash");
 var fs = require("fs");
 var path = require("path");
 var config = require("../core/config").config;
@@ -8,7 +9,7 @@ var config = require("../core/config").config;
  * Push the given item and return the array itself.
  */
 if (!Array.prototype.pushRetrieve) {
-    Array.prototype.pushRetrieve = function(item) {
+    Array.prototype.pushRetrieve = function (item) {
         this.push(item);
         return this;
     };
@@ -28,7 +29,9 @@ function getEntitiesPath(entityType) {
  * @param entityId Entity identifier.
  */
 function getEntityPath(entityType, entityId) {
-    return path.resolve(config.server.apiDir, entityType, entityId + config.server.apiFileExtension);
+    return entityType === "upload"
+        ? path.resolve(config.server.apiDir, entityType, entityId)
+        : path.resolve(config.server.apiDir, entityType, entityId + config.server.apiFileExtension);
 }
 
 /**
@@ -128,9 +131,98 @@ function createEntityFile(entityType, entityData, cb) {
     });
 }
 
+/**
+ * Overwrite a previously created entity file.
+ * @param entityType Entity type (the directory name).
+ * @param entityId Entity identifier.
+ * @param entityData Entity data.
+ * @param cb Action callback.
+ */
+function overwriteEntityFile(entityType, entityId, entityData, cb) {
+    // Generate the entity file path.
+    var filePath = getEntityPath(entityType, entityId);
+    // Get the file stats.
+    fs.stat(filePath, function(err) {
+        // If the file does not exists.
+        if (err) {
+            // Execute the callback.
+            cb(err);
+        }
+        // Otherwise.
+        else {
+            // Set the identifier to the entity.
+            entityData.id = entityId;
+            // Overwrite the entity data.
+            fs.writeFile(filePath, JSON.stringify(entityData), function (err) {
+                // Execute the callback.
+                cb(err, entityData);
+            });
+        }
+    });
+}
+
+/**
+ * Remove an existing entity file.
+ * @param entityType Entity type (the directory name).
+ * @param entityId Entity identifier.
+ * @param cb Action callback.
+ */
+function deleteEntityFile(entityType, entityId, cb) {
+    // Generate the entity file path.
+    var filePath = getEntityPath(entityType, entityId);
+    // Get the file stats.
+    fs.stat(filePath, function(err) {
+        // If the file does not exists.
+        if (err) {
+            // Execute the callback.
+            cb(err);
+        }
+        // Otherwise.
+        else {
+            // Remove the entity file.
+            fs.unlink(filePath, cb);
+        }
+    });
+}
+
+/**
+ * Update a previously created entity file.
+ * @param entityType Entity type (the directory name).
+ * @param entityId Entity identifier.
+ * @param entityData Entity data.
+ * @param cb Action callback.
+ */
+function updateEntityFile(entityType, entityId, entityData, cb) {
+    // Generate the entity file path.
+    var filePath = getEntityPath(entityType, entityId);
+    // Read the entity file.
+    fs.readFile(filePath, "utf8", function(err, data) {
+        // If the file does not exists.
+        if (err) {
+            // Execute the callback.
+            cb(err);
+        }
+        // Otherwise.
+        else {
+            // Parse the entity file content.
+            var currentData = JSON.parse(data);
+            // Merge the current data with the new one.
+            _.merge(currentData, entityData);
+            // Write the new entity data to the its file path.
+            fs.writeFile(filePath, JSON.stringify(currentData), function(err) {
+                // Execute the callback.
+                cb(err, currentData);
+            });
+        }
+    });
+}
+
 exports.getEntitiesPath = getEntitiesPath;
 exports.getEntityPath = getEntityPath;
 exports.getDirectoryFilesSortedAsc = getDirectoryFilesSortedAsc;
 exports.getDirectoryFilesSortedDesc = getDirectoryFilesSortedDesc;
 exports.createEntityDirectory = createEntityDirectory;
 exports.createEntityFile = createEntityFile;
+exports.overwriteEntityFile = overwriteEntityFile;
+exports.deleteEntityFile = deleteEntityFile;
+exports.updateEntityFile = updateEntityFile;

@@ -49,8 +49,8 @@ To change the server host or the server port, create a `ns-config.json` in your 
 Also, you can change the directory where the entities are stored, being `./api` the default value:
 ```json
 {
-  "server": {
-    "apiDir": "./entities"
+  "dirs": {
+    "api": "./entities"
   }
 }
 ```
@@ -61,9 +61,9 @@ Also, you can change the directory where the entities are stored, being `./api` 
 
 ## Status
 
-+ GET and POST actions have been already implemented.
-+ PUT, PATCH and DELETE actions will be implemented soon.
-+ The error handling is really poor at the time. I promise to put some effort in this issue.
++ The actions for GET, POST, PUT, PATCH and DELETE methods are already working.
++ Some services for uploading and serving static files will be implemented soon.
++ The error handling is really poor at the time. I promise to put some effort in this issue. Eventually.
 
 ## License
 
