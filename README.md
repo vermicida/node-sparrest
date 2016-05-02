@@ -27,9 +27,7 @@ $ npm run sparrest
 
 ## Custom configuration
 
-The default configuration runs the **node-sparrest** server at `http://127.0.0.1:8000`, but you can customize it.
-
-**node-sparrest** allows you to override the default configuration via a local `ns-config.json` or `ns-config.js` file in your project.
+The default configuration runs the **node-sparrest** server at `http://127.0.0.1:8000`, but you can customize it. You are allowed to override the default configuration via a local `ns-config.json` or `ns-config.js` file in your project.
 
 To change the server's host and/or port, create a `ns-config.json` in your project's folder with this configuration:
 ```json
@@ -50,7 +48,7 @@ Also, you can change the directory where the entities are stored, being `./api` 
 }
 ```
 
-And if you want to change the default static files directory, which is `./static`, try this:
+If you want to change the default static files directory, which is `./static`, try this:
 ```json
 {
   "dirs": {
@@ -61,20 +59,20 @@ And if you want to change the default static files directory, which is `./static
 
 ## How to
 
-I will show you a quick **node-sparrest** walkthrough.
+This is a quick **node-sparrest** walkthrough.
 
 ### Create a new entity
 
-Just do a POST request to the `/api/entity` path, where `entity` is the type of the data you want to store. Use the request body to write the JSON data, and don't forget to set the `Content-Type` header as `application/json`:
+Just do a **POST** request to the `/api/entity` path, where `entity` is the type of the data you want to store. Use the request body to write the JSON data to store, and don't forget to set the `Content-Type` header as `application/json`:
 
 ```bash
-$ curl -H "Content-Type: application/json" \
-       -X POST \
+$ curl -X POST \
+       -H "Content-Type: application/json" \
        -d '{"brand": "Gibson", "model": "Les Paul Goldtop", "year": 1957}' \
        http://localhost:8000/api/guitars
 ```
 
-An incremental identifier will be set to the entity, starting by 1.
+An incremental identifier will be set to the entity, starting at 1.
 
 ```json
 {
@@ -85,9 +83,9 @@ An incremental identifier will be set to the entity, starting by 1.
 }
 ```
 
-### Retrieve an entity data
+### Retrieve entity data
 
-Try to do a GET request to a path pointing to its type and identifier:
+Try to do a **GET** request to a path pointing to its type and identifier:
 
 ```bash
 $ curl http://localhost:8000/api/guitars/2
@@ -106,7 +104,7 @@ You will get the entity asked for:
 
 ### List all entities
 
-To retrieve a collection just do a GET request using the entity type as path:
+To retrieve a collection just do a **GET** request using the entity type as path:
 
 ```bash
 $ curl http://localhost:8000/api/guitars
@@ -135,16 +133,16 @@ Et voilà:
 
 ### Updating and patching an entity
 
-You can override an entity by using a PUT request. You must point the request to the single entity you want to update:
+You can override an entity by using a **PUT** request. You must point the request to the single entity you want to update:
 
 ```bash
-$ curl -H "Content-Type: application/json" \
-       -X PUT \
+$ curl -X PUT \
+       -H "Content-Type: application/json" \
        -d '{"brand": "Fender"}' \
        http://localhost:8000/api/guitars/3
 ```
 
-Your updated entity.
+Your updated entity:
 
 ```json
 {
@@ -153,16 +151,16 @@ Your updated entity.
 }
 ```
 
-Or you might prefer to patch it:
+Or you might prefer to patch it with a **PATCH** request:
 
 ```bash
-$ curl -H "Content-Type: application/json" \
-       -X PATCH \
+$ curl -X PATCH \
+       -H "Content-Type: application/json" \
        -d '{"model": "Relic Telecaster Custom", "year": 1962}' \
        http://localhost:8000/api/guitars/3
 ```
 
-And your original entity is back:
+Your original entity is back:
 
 ```json
 {
@@ -175,10 +173,10 @@ And your original entity is back:
 
 ### Deleting entities
 
-To delete an entity, you must do a DELETE request to its type and identifier. Make it this way:
+To delete an entity, you must do a **DELETE** request to its type and identifier. Make it this way:
 
 ```bash
-curl -X DELETE http://localhost:8000/api/guitars/3
+$ curl -X DELETE http://localhost:8000/api/guitars/3
 ```
 
 ## More
@@ -188,7 +186,7 @@ curl -X DELETE http://localhost:8000/api/guitars/3
 ## Status
 
 + The actions for GET, POST, PUT, PATCH and DELETE methods are already working.
-+ Now you can upload & serve static files.
++ It is possible to upload and serve static files.
 + The error handling is really poor at the time. I promise to put some effort in this issue. Eventually.
 
 ## License
