@@ -1,18 +1,13 @@
 
-/**
- * Module config loader based on John Papa's lite-server module.
- * https://www.npmjs.com/package/lite-server
- */
-
+// Requires.
 var _ = require("lodash");
 var path = require("path");
-var argv = require("minimist")(process.argv.slice(2));
 
 // The module default config.
 var defaultConfig = {
     "dirs": {
         "api": "./api",
-        "static": "./api/static"
+        "static": "./static"
     },
     "server": {
         "host": "127.0.0.1",
@@ -21,24 +16,25 @@ var defaultConfig = {
 };
 
 // The user default config.
-var userConfig = {};
+var userConfig;
 
-// Try to get the user config.
-var nsConfigName = argv.c || argv.config || "ns-config";
-var nsConfigPath = path.resolve(nsConfigName);
-
+// Try to load a custom config file.
 try {
-    userConfig = require(nsConfigPath);
+
+    userConfig = require(path.resolve("ns-config"));
+    console.log("------------------------------------------");
+    console.log("A custom user config was found; using it.");
 }
+// In case of error.
 catch(err) {
-    // If the config file was not found.
-    if (err.code && err.code === "MODULE_NOT_FOUND") {
-        console.info("No `ns-config.json` or `ns-config.js` file was not found. Using the node-sparrest defaults...");
+
+    // If the error is not related with the custom config file.
+    if (!err.code || err.code !== "MODULE_NOT_FOUND") {
+        process.exit(1);
     }
-    // If another error was thrown.
-    else {
-        throw(err);
-    }
+
+    // Otherwise.
+    userConfig = {};
 }
 
 // Overrides the module default config with the user's one.

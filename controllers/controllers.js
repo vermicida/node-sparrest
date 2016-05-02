@@ -1,4 +1,5 @@
 
+// Requires.
 var commonEntity = require("../entities/common-entity");
 var staticFile = require("../entities/static-file");
 
@@ -15,7 +16,7 @@ module.exports.listCommonEntities = (req, res) => {
     // Get the entities.
     commonEntity.list(type, (data) => {
 
-        // Serves the entities collection.
+        // Serve the entities collection.
         res.set("Content-Type", "application/json");
         res.status(200).send(data);
     });
@@ -39,7 +40,7 @@ module.exports.getCommonEntity = (req, res, next) => {
         // In case of error.
         if (err) { return next(err); }
 
-        // Serves the entity file content.
+        // Serve the entity file content.
         res.set("Content-Type", "application/json");
         res.status(200).send(data);
     });
@@ -63,7 +64,7 @@ module.exports.createCommonEntity = (req, res, next) => {
         // In case of error.
         if (err) { return next(err); }
 
-        // Serves the entity file content.
+        // Serve the entity file content.
         res.set("Content-Type", "application/json");
         res.status(201).send(data);
     });
@@ -88,7 +89,7 @@ module.exports.replaceCommonEntity = (req, res, next) => {
         // In case of error.
         if (err) { return next(err); }
 
-        // Serves the entity file content.
+        // Serve the entity file content.
         res.set("Content-Type", "application/json");
         res.status(200).send(data);
     });
@@ -113,7 +114,7 @@ module.exports.updateCommonEntity = (req, res, next) => {
         // In case of error.
         if (err) { return next(err); }
 
-        // Serves the entity file content.
+        // Serve the entity file content.
         res.set("Content-Type", "application/json");
         res.status(200).send(data);
     });
@@ -150,14 +151,15 @@ module.exports.deleteCommonEntity = (req, res, next) => {
  */
 module.exports.uploadStaticFile = (req, res, next) => {
     
-    var stream;
-    
-    staticFile.upload(stream, (err, data) => {
+    // Upload the document.
+    staticFile.upload(req, (err, data) => {
 
         // In case of error.
         if (err) { return next(err); }
 
-        // TODO
+        // Serve the uploaded document path.
+        res.set("Content-Type", "application/json");
+        res.status(201).send(data);
     });
 };
 
@@ -168,14 +170,17 @@ module.exports.uploadStaticFile = (req, res, next) => {
  * @param next Next matching route.
  */
 module.exports.serveStaticFile = (req, res, next) => {
+
+    // Parameters.
+    var document = req.params.document;
     
-    var id;
-    
-    staticFile.serve(id, (err, data) => {
+    // Get the path
+    staticFile.serve(document, (err, data) => {
 
         // In case of error.
         if (err) { return next(err); }
 
-        // TODO
+        // Serve the static document.
+        res.status(200).sendFile(data.path);
     });
 };

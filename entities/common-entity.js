@@ -1,18 +1,19 @@
 
-var fs = require("fs");
-var path = require("path");
+// Requires.
 var _ = require("lodash");
-var mkdirp = require("mkdirp");
 var config = require("../core/config");
+var fs = require("fs");
+var mkdirp = require("mkdirp");
+var path = require("path");
 
 /**
- * Generates the file path to the given entity type and identifier.
+ * Generate the file path to the given entity type and identifier.
  * @param type The entity type.
  * @param id The entity identifier.
  */
 function getEntityPath(type, id) {
 
-    return id ? path.resolve(config.dirs.api, type, ("" + id)) : path.resolve(config.dirs.api, type);
+    return id ? path.resolve(config.dirs.api, type, +id) : path.resolve(config.dirs.api, type);
 }
 
 /**
@@ -169,7 +170,7 @@ var CommonEntity = {
             else {
 
                 // Overwrite the entity identifier.
-                data.id = id;
+                data.id = +id;
 
                 // Overwrite the entity file.
                 fs.writeFile(entityPath, JSON.stringify(data), (err) => {
@@ -209,7 +210,7 @@ var CommonEntity = {
                 _.merge(current, data);
 
                 // Overwrite the entity identifier.
-                current.id = id;
+                current.id = +id;
 
                 // Write the new entity data to the file.
                 fs.writeFile(entityPath, JSON.stringify(current), (err) => {

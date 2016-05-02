@@ -1,5 +1,5 @@
 
-.idea
-api
-node_modules
-
+/.idea
+/api
+/static
+/node_modules
