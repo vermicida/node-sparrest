@@ -11,8 +11,17 @@ var config = require("./core/config");
 var app = express();
 app.use(bodyParser.json());
 
+// Set the middleware to support CORS requests.
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Accept, Authorization, Cache-Control, Content-Type, Origin, Pragma, X-Requested-With");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+    next();
+});
+
 // Set the middleware to log the incoming requests.
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     var now = dateFormat(new Date(), "dd/mm/yyyy HH:MM:ss");
     console.log(sprintf(
         "%s %s %s %s",
@@ -38,7 +47,7 @@ app.get("/upload/:document", controllers.serveStaticFile);
 app.listen(
     config.server.port,
     config.server.host,
-    function() {
+    () => {
         // Show a log with the config.
         console.log("------------------------------------------");
         console.log(sprintf("          API dir: %s", config.dirs.api));

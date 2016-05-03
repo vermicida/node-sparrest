@@ -1,7 +1,7 @@
 
 {
   "name": "node-sparrest",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Based on Alberto Casero's SparREST, node-sparrest brings to you a development-only sparring backend to test your APIs with.",
   "repository": {
     "type": "git",

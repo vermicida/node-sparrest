@@ -13,7 +13,7 @@ var path = require("path");
  */
 function getEntityPath(type, id) {
 
-    return id ? path.resolve(config.dirs.api, type, +id) : path.resolve(config.dirs.api, type);
+    return id ? path.resolve(config.dirs.api, type, ("" + id)) : path.resolve(config.dirs.api, type);
 }
 
 /**
