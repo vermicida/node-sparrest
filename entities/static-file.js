@@ -1,12 +1,12 @@
 
-// Requires.
-var config = require("../core/config");
-var formidable = require("formidable");
-var fs = require("fs");
-var mkdirp = require("mkdirp");
-var path = require("path");
-var randomstring = require("randomstring");
-var sprintf = require("sprintf-js").sprintf;
+// Dependencies.
+const config = require("../core/config");
+const formidable = require("formidable");
+const fs = require("fs");
+const mkdirp = require("mkdirp");
+const path = require("path");
+const randomstring = require("randomstring");
+const sprintf = require("sprintf-js").sprintf;
 
 /**
  * Generate the file path to the given static document.

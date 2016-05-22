@@ -1,7 +1,7 @@
 
-// Requires.
-var _ = require("lodash");
-var path = require("path");
+// Dependencies.
+const _ = require("lodash");
+const path = require("path");
 
 // The module default config.
 var defaultConfig = {

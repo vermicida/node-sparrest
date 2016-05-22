@@ -1,10 +1,10 @@
 
-// Requires.
-var _ = require("lodash");
-var config = require("../core/config");
-var fs = require("fs");
-var mkdirp = require("mkdirp");
-var path = require("path");
+// Dependencies.
+const _ = require("lodash");
+const config = require("../core/config");
+const fs = require("fs");
+const mkdirp = require("mkdirp");
+const path = require("path");
 
 /**
  * Generate the file path to the given entity type and identifier.
@@ -68,9 +68,11 @@ var CommonEntity = {
     /**
      * Get the entities corresponding the given type.
      * @param type The entity type.
+     * @param filter A filter object to apply to the collection.
+     * @param sort A sort condition to apply to the collection.
      * @param cb The action callback.
      */
-    list: (type, cb) => {
+    list: (type, filter, sort, cb) => {
 
         // Get the entity path.
         var entityPath = getEntityPath(type);
@@ -81,8 +83,32 @@ var CommonEntity = {
             // Create a list with the files content.
             var contents = files.map((file) => { return fs.readFileSync(getEntityPath(type, file)); });
 
+            // Create the JSON object with the entities.
+            var entities = JSON.parse("[" + contents.join(",") + "]");
+            
+            // Filter the entities collection.
+            if (entities.length > 0 && _.isString(filter)) {
+
+                try {
+
+                    // Try to parse the given filter first.
+                    filter = JSON.parse(filter);
+                    entities = _.filter(entities, filter);
+                }
+                catch(err) {
+                    /* Do nothing */
+                }
+            }
+
+            // Sort the entities collection.
+            if (entities.length > 0 && _.isString(sort)) {
+
+                // Check the sort direction first.
+                entities = sort.startsWith("-") ? _.orderBy(entities, sort.substring(1), "desc") : _.sortBy(entities, sort);
+            }
+
             // Create and return the JSON object with the entities.
-            cb(JSON.parse("[" + contents.join(",") + "]"));
+            cb(entities);
         });
     },
 

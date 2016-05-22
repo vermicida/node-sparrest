@@ -1,11 +1,11 @@
 
-// Requires.
-var express = require("express");
-var bodyParser = require("body-parser");
-var dateFormat = require("dateformat");
-var sprintf = require("sprintf-js").sprintf;
-var controllers = require("./controllers/controllers");
-var config = require("./core/config");
+// Dependencies.
+const express = require("express");
+const bodyParser = require("body-parser");
+const dateFormat = require("dateformat");
+const sprintf = require("sprintf-js").sprintf;
+const controllers = require("./controllers/controllers");
+const config = require("./core/config");
 
 // The Express application.
 var app = express();

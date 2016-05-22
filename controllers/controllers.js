@@ -1,7 +1,7 @@
 
-// Requires.
-var commonEntity = require("../entities/common-entity");
-var staticFile = require("../entities/static-file");
+// Dependencies.
+const commonEntity = require("../entities/common-entity");
+const staticFile = require("../entities/static-file");
 
 /**
  * Handler for the entities collection retrieving requests.
@@ -13,8 +13,15 @@ module.exports.listCommonEntities = (req, res) => {
     // Parameters.
     var type = req.params.entity;
 
+    // Query parameters.
+    var filter = req.query.filter;
+    var sort = req.query.sort;
+
+    console.log(filter);
+    console.log(sort);
+
     // Get the entities.
-    commonEntity.list(type, (data) => {
+    commonEntity.list(type, filter, sort, (data) => {
 
         // Serve the entities collection.
         res.set("Content-Type", "application/json");

@@ -1,8 +1,9 @@
-
 {
   "name": "node-sparrest",
   "version": "0.0.7",
   "description": "Based on Alberto Casero's SparREST, node-sparrest brings to you a development-only sparring backend to test your APIs with.",
+  "author": "Diego Herrera",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/vermicida/node-sparrest.git"
@@ -17,9 +18,10 @@
     "json",
     "sparrest"
   ],
-  "author": "Diego Herrera",
-  "license": "MIT",
-  "main": "node-sparrest.js",
+  "bin": "./node-sparrest.js",
+  "scripts": {
+    "dev": "nodemon ./node-sparrest.js"
+  },
   "dependencies": {
     "body-parser": "^1.15.0",
     "dateformat": "^1.0.12",
@@ -29,5 +31,8 @@
     "mkdirp": "^0.5.1",
     "randomstring": "^1.1.4",
     "sprintf-js": "^1.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
   }
 }
