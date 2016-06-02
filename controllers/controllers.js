@@ -17,9 +17,6 @@ module.exports.listCommonEntities = (req, res) => {
     var filter = req.query.filter;
     var sort = req.query.sort;
 
-    console.log(filter);
-    console.log(sort);
-
     // Get the entities.
     commonEntity.list(type, filter, sort, (data) => {
 
