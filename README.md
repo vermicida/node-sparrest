@@ -179,6 +179,30 @@ To delete an entity, you must do a **DELETE** request to its type and identifier
 $ curl -X DELETE http://localhost:8000/api/guitars/3
 ```
 
+### Upload & serve a static file
+
+Since version 0.0.8, you can upload a static file to the **node-sparrest** server. Just make sure you are using the `/upload` endpoint instead of `/api/entity`. The request must be a `POST` one:
+
+```bash
+$ curl -X POST \
+       -F "file=@/Users/myuser/Desktop/relic-telecaster-custom.png" \
+       http://localhost:8000/upload
+```
+
+A relative path to the uploaded file will be set in the response:
+
+```json
+{
+  "path": "upload/cs14cg7h4u781twf.png"
+}
+```
+
+Then, to serve this file, just prefix the given relative path with the **node-sparrest** server's:
+
+```
+http://localhost:8000/upload/cs14cg7h4u781twf.png
+```
+
 ## More
 
 **node-sparrest** is based on Alberto Casero's SparREST; this is only an attempt to port it from Python to the Node.js world. I highly recommend you to visit the [SparREST repository](https://github.com/kasappeal/sparrest) for more info.
